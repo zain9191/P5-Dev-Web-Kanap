@@ -1,0 +1,20 @@
+{
+  "name": "p5-kanap",
+  "version": "1.0.0",
+  "description": "OpenClassRoom P-5",
+  "main": "index.js",
+  "scripts": {
+    "start": "node back/server.js"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zain9191/P5-Dev-Web-Kanap.git"
+  },
+  "author": "Zain Fr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zain9191/P5-Dev-Web-Kanap/issues"
+  },
+  "homepage": "https://github.com/zain9191/P5-Dev-Web-Kanap#readme"
+}
