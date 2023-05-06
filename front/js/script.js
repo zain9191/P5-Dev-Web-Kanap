@@ -17,52 +17,45 @@ const getArticles = async () => {
   }
 };
 
-// Create an async function to execute the entire process
+//  create a product card 
+function createProductCard(data) {
+  const anchor = document.createElement("a");
+  anchor.href = `./product.html?id=${data._id}&imageUrl=${encodeURIComponent(data.imageUrl)}`; // Encode the image URL using encodeURIComponent()
+
+  const article = document.createElement("article");
+
+  const img = document.createElement("img");
+  img.src = data.imageUrl;
+  img.alt = `Lorem ipsum dolor sit amet, ${data.name}`;
+
+  const title = document.createElement("h3");
+  title.classList.add("productName");
+  title.textContent = data.name;
+
+  // Create a p element, add the "productDescription" class, and set its text content
+  const description = document.createElement("p");
+  description.classList.add("productDescription");
+  description.textContent = data.description;
+
+  // Append the img, title, and description elements to the article element
+  article.appendChild(img);
+  article.appendChild(title);
+  article.appendChild(description);
+
+  // Append the article element to the anchor tag
+  anchor.appendChild(article);
+
+  return anchor;
+}
+
+// a async function to execute the  process
 (async () => {
   const articles = await getArticles();
   console.log(articles);
 
-  // Loop through the articles array
   for (let i = 0; i < articles.length; i++) {
-    const article = articles[i];
+    const productCard = createProductCard(articles[i]);
 
-    const articleLink = document.createElement("a");
-    articleLink.href = `./product.html?id=${article._id}`;
-
-    const articleElement = document.createElement("article");
-
-    const img = document.createElement("img");
-    img.src = article.imageUrl; 
-    img.alt = `Lorem ipsum dolor sit amet, ${article.name}`;
-
-    const title = document.createElement("h3");
-    title.classList.add("productName");
-    title.textContent = article.name;
-
-    const description = document.createElement("p");
-    description.classList.add("productDescription");
-    description.textContent = article.description;
-
-    // Append the image, title, and description elements to the article element
-    articleElement.appendChild(img);
-    articleElement.appendChild(title);
-    articleElement.appendChild(description);
-
-    // Append the article element to the anchor tag
-    articleLink.appendChild(articleElement);
-
-    // Append the anchor tag  to the items container
-    itemsContainer.appendChild(articleLink);
+    itemsContainer.appendChild(productCard);
   }
-
-
-
-//   // Inside the loop through the articles array
-// for (let i = 0; i < articles.length; i++) {
-//   const article = articles[i];
-//   console.log("Article data:", article); // Add this line to log the article data
-
-//   // Rest of the code ...
-// }
-
 })();
