@@ -27,7 +27,7 @@ const getArticles = async () => {
     const article = articles[i];
 
     const articleLink = document.createElement("a");
-    articleLink.href = `./product.html?id=${article.id}`;
+    articleLink.href = `./product.html?id=${article._id}`;
 
     const articleElement = document.createElement("article");
 
@@ -54,4 +54,15 @@ const getArticles = async () => {
     // Append the anchor tag  to the items container
     itemsContainer.appendChild(articleLink);
   }
+
+
+
+//   // Inside the loop through the articles array
+// for (let i = 0; i < articles.length; i++) {
+//   const article = articles[i];
+//   console.log("Article data:", article); // Add this line to log the article data
+
+//   // Rest of the code ...
+// }
+
 })();
