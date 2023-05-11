@@ -37,7 +37,6 @@ function getQueryParams() {
     const productTitle = document.querySelector("#title");
     const name = product.name;
     productTitle.innerHTML = name;
-    alert(productTitle.value)
 
 
     const productPrice = document.querySelector("#price");
@@ -74,6 +73,7 @@ function getQueryParams() {
     addToCart.addEventListener("click",(event)=>{
         event.preventDefault();
         // get product detalies and add them local storage
+
         // id
         const queryParams = getQueryParams();
         const productId = queryParams.id;
@@ -85,19 +85,23 @@ function getQueryParams() {
         // name
         const productTitle = document.querySelector("#title");
         const selectedTitle = productTitle.value;
-        // console.log(selectedTitle)
         console.log(selectedTitle)
-        // console.log(selectedTitle)
 
         // price
         const productPrice = document.querySelector("#price");
         const selectedProductPrice = productTitle.value;
 
+        // count
+        const productCount = document.querySelector("#quantity");
+        const selectedcount = productCount.value;
+        alert(selectedcount)
+
         // Store the data
         localStorage.setItem('productId', productId);
         localStorage.setItem('selectedColor', selectedColor);
-        localStorage.setItem('title', selectedTitle);
-        localStorage.setItem('price', selectedProductPrice);
+        localStorage.setItem('title', product.name);
+        localStorage.setItem('price', price);
+        localStorage.setItem('count', selectedcount);
 
         // Redirect to the other page
         window.location.href = 'cart.html';
