@@ -77,38 +77,64 @@ function getQueryParams() {
         // id
         const queryParams = getQueryParams();
         const productId = queryParams.id;
-              
+
+        alert(productId)
+
+
         // color
         const colorOptieions = document.querySelector('#colors');
         const selectedColor = colorOptieions.value;
+        alert(selectedColor)
+
 
         // name
         const productTitle = document.querySelector("#title");
         const selectedTitle = productTitle.value;
-        console.log(selectedTitle)
+        alert(product.name)
 
         // price
         const productPrice = document.querySelector("#price");
         const selectedProductPrice = productTitle.value;
+        alert(product.price)
+
 
         // count
         const productCount = document.querySelector("#quantity");
         const selectedcount = productCount.value;
         alert(selectedcount)
 
-        // Store the data
-        localStorage.setItem('productId', productId);
-        localStorage.setItem('selectedColor', selectedColor);
-        localStorage.setItem('title', product.name);
-        localStorage.setItem('price', price);
-        localStorage.setItem('count', selectedcount);
+
+
+        // Let's say you have an array of product objects that you want to store:
+        let order = [
+            {
+            id: productId,
+            color: selectedColor,
+            title: product.name,
+            price: product.price,
+            count: selectedcount,
+            },
+        ];
+        
+        localStorage.setItem('order', JSON.stringify(order));
+        
+        
+
+
+
+
+        // // Store the data
+        // localStorage.setItem('productId', productId);
+        // localStorage.setItem('selectedColor', selectedColor);
+        // localStorage.setItem('title', product.name);
+        // localStorage.setItem('price', price);
+        // localStorage.setItem('count', selectedcount);
 
         // Redirect to the other page
         window.location.href = 'cart.html';
 
 
     })
-    // console.log(addToCart)
 
 
   })();
