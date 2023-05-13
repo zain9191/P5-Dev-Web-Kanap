@@ -79,4 +79,4 @@ const totalQuantityElement = document.querySelector("#totalQuantity");
 const totalPriceElement = document.querySelector("#totalPrice");
 
 totalQuantityElement.textContent = totalQuantity;
-totalPriceElement.textContent = totalPrice.toFixed(2);  // toFixed(2) will ensure that the price is always shown with two decimal places
+totalPriceElement.textContent = totalPrice.toFixed(2);
