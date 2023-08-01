@@ -183,12 +183,12 @@ h2 {
 	font-weight: bold;
   }
   
-  .error {
-	border: 1px solid red;
+/* Add this to your cart.css */
+.cart__order__form__question input.error {
+	background-color:  red;
   }
   
-  .error-msg {
-	color: red;
-	font-size: 0.9rem;
-	margin-top: 5px;
+  .cart__order__form__question input.valid {
+	border: 5px solid green;
   }
+  

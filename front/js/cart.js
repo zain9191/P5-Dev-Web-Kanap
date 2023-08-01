@@ -223,13 +223,16 @@ function validateFirstName() {
   const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
 
   if (!firstNameIsValid) {
+    firstNameInput.classList.add('error');
     firstNameErrorMsg.textContent = "Please enter a valid first name (letters only).";
   } else {
+    firstNameInput.classList.remove('error');
     firstNameErrorMsg.textContent = "";
   }
 
   return firstNameIsValid;
 }
+
 
 // Function to validate the last name
 function validateLastName() {
@@ -240,15 +243,15 @@ function validateLastName() {
   const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
 
   if (!lastNameIsValid) {
+    lastNameInput.classList.add('error');
     lastNameErrorMsg.textContent = "Please enter a valid last name (letters only).";
   } else {
+    lastNameInput.classList.remove('error');
     lastNameErrorMsg.textContent = "";
   }
 
   return lastNameIsValid;
 }
-
-// Function to validate the email address
 function validateEmail() {
   const emailInput = document.getElementById("email");
   const email = emailInput.value.trim();
@@ -257,14 +260,15 @@ function validateEmail() {
   const emailErrorMsg = document.getElementById("emailErrorMsg");
 
   if (!emailIsValid) {
+    emailInput.classList.add('error');
     emailErrorMsg.textContent = "Please enter a valid email address.";
   } else {
+    emailInput.classList.remove('error');
     emailErrorMsg.textContent = "";
   }
 
   return emailIsValid;
 }
-
 // Function to validate the address
 function validateAddress() {
   const addressInput = document.getElementById("address");
@@ -274,8 +278,10 @@ function validateAddress() {
   const addressErrorMsg = document.getElementById("addressErrorMsg");
 
   if (!addressIsValid) {
+    addressInput.classList.add('error');
     addressErrorMsg.textContent = "Please enter a valid address.";
   } else {
+    addressInput.classList.remove('error');
     addressErrorMsg.textContent = "";
   }
 
@@ -291,8 +297,10 @@ function validateCity() {
   const cityErrorMsg = document.getElementById("cityErrorMsg");
 
   if (!cityIsValid) {
+    cityInput.classList.add('error');
     cityErrorMsg.textContent = "Please enter a valid city.";
   } else {
+    cityInput.classList.remove('error');
     cityErrorMsg.textContent = "";
   }
 
@@ -307,9 +315,16 @@ function validateForm() {
   const addressIsValid = validateAddress();
   const cityIsValid = validateCity();
 
-  // Return true if all fields are valid, otherwise return false
-  return firstNameIsValid && lastNameIsValid && emailIsValid && addressIsValid && cityIsValid;
+  // Return an object containing the validity status of each field
+  return {
+    firstNameIsValid,
+    lastNameIsValid,
+    emailIsValid,
+    addressIsValid,
+    cityIsValid,
+  };
 }
+
   
 
 // Add event listeners to form fields for  validation
@@ -325,3 +340,31 @@ cityInput.addEventListener("input", validateCity);
 
 // Calculate the total on page load
 calculateTotal();
+
+
+// Function to handle form submission
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const formIsValid = validateForm();
+
+  if (formIsValid.firstNameIsValid && formIsValid.lastNameIsValid && formIsValid.emailIsValid && formIsValid.addressIsValid && formIsValid.cityIsValid) {
+    // Save the order details to localStorage
+    const orderDetails = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      email: document.getElementById("email").value,
+      address: document.getElementById("address").value,
+      city: document.getElementById("city").value,
+      totalQuantity: totalQuantity,
+      totalPrice: totalPrice.toFixed(2),
+    };
+    localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
+    // Redirect to the confirmation page
+    window.location.href = "./confirmation.html";
+  }
+}
+
+// Add event listener to the form for form submission
+const orderForm = document.querySelector('.cart__order__form');
+orderForm.addEventListener('submit', handleFormSubmit);
