@@ -170,3 +170,25 @@ h2 {
 		width: 75%;
 	}
 }
+
+/* Increment and decrement quantity arrows  */
+.quantity-controls {
+	display: flex;
+	align-items: center;
+  }
+  
+  .quantity-controls span {
+	cursor: pointer;
+	padding: 0 5px;
+	font-weight: bold;
+  }
+  
+  .error {
+	border: 1px solid red;
+  }
+  
+  .error-msg {
+	color: red;
+	font-size: 0.9rem;
+	margin-top: 5px;
+  }
