@@ -342,6 +342,13 @@ cityInput.addEventListener("input", validateCity);
 calculateTotal();
 
 
+// Function to generate a random order ID
+function generateOrderId() {
+  // Logic to generate a unique order ID (e.g., using a random number or a timestamp)
+  return Math.floor(Math.random() * 1000000000).toString();
+}
+
+
 // Function to handle form submission
 function handleFormSubmit(event) {
   event.preventDefault();
@@ -357,6 +364,7 @@ function handleFormSubmit(event) {
       city: document.getElementById("city").value,
       totalQuantity: totalQuantity,
       totalPrice: totalPrice.toFixed(2),
+      orderId: generateOrderId(),
     };
     localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
 
