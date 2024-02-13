@@ -27,6 +27,7 @@ cart.forEach((product) => {
   productImgDiv.classList.add('cart__item__img');
   let productImg = document.createElement('img');
   productImg.src = product.imgURL;
+  productImg.src = product.imgURL.replace('/images/', '/images/mini/');
   productImg.alt = product.title;
   productImgDiv.appendChild(productImg);
 
@@ -367,6 +368,9 @@ function handleFormSubmit(event) {
       orderId: generateOrderId(),
     };
     localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
+    localStorage.removeItem('cart'); 
+
 
     // Redirect to the confirmation page
     window.location.href = "./confirmation.html";

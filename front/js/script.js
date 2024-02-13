@@ -26,6 +26,8 @@ function createProductCard(data) {
 
   const img = document.createElement("img");
   img.src = data.imageUrl;
+  img.src = data.imageUrl.replace('/images/', '/images/mini/');
+
   img.alt = `Lorem ipsum dolor sit amet, ${data.name}`;
 
   const title = document.createElement("h3");
