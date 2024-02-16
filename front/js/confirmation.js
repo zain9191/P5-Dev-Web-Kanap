@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     orderDetails = JSON.parse(orderDetails);
   
     if (orderDetails) {
-        console.log(orderDetails)
+        // console.log(orderDetails)
       // Display the order details on the confirmation page
       const orderIdElement = document.getElementById("orderId");
       orderIdElement.textContent = orderDetails.orderId; // Display the order ID received from the API

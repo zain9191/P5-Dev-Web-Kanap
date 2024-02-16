@@ -53,7 +53,7 @@ function createProductCard(data) {
 // a async function to execute the  process
 (async () => {
   const articles = await getArticles();
-  console.log(articles);
+  // console.log(articles);
 
   for (let i = 0; i < articles.length; i++) {
     const productCard = createProductCard(articles[i]);

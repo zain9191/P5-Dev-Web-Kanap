@@ -3,10 +3,11 @@ let storedCart = localStorage.getItem('cart');
 let cart;
 
 if (storedCart) {
-  cart = JSON.parse(storedCart);
+  cart = JSON.parse(storedCart); // Parse the stored cart data back into an array
 } else {
-  cart = [];
+  cart = []; // Initialize an empty array if no cart data is found in local storage
 }
+
 
 const cartAndFormContainer = document.querySelector("#cartAndFormContainer");
 
@@ -17,12 +18,15 @@ cartAndFormContainer.appendChild(cartSection);
 let totalPrice = 0;
 let totalQuantity = 0;
 
+// Loop through each product in the cart to display them
 cart.forEach((product) => {
+  // Create an article for each product and set data attributes for id and color
   let productArticle = document.createElement('article');
   productArticle.classList.add('cart__item');
   productArticle.dataset.id = product.id;
   productArticle.dataset.color = product.color;
 
+  // Create and add the product image
   let productImgDiv = document.createElement('div');
   productImgDiv.classList.add('cart__item__img');
   let productImg = document.createElement('img');
@@ -31,6 +35,7 @@ cart.forEach((product) => {
   productImg.alt = product.title;
   productImgDiv.appendChild(productImg);
 
+  // Create the product description section
   let productContentDiv = document.createElement('div');
   productContentDiv.classList.add('cart__item__content');
 
@@ -44,8 +49,11 @@ cart.forEach((product) => {
   productPrice.textContent = `${product.price} €`;
   productDescriptionDiv.append(productTitle, productColor, productPrice);
 
+  // Create the product settings (quantity and delete option)
   let productSettingsDiv = document.createElement('div');
   productSettingsDiv.classList.add('cart__item__content__settings');
+
+  // Create the quantity adjustment section
   let productQuantityDiv = document.createElement('div');
   productQuantityDiv.classList.add('cart__item__content__settings__quantity');
   let quantityText = document.createElement('p');
@@ -60,21 +68,17 @@ cart.forEach((product) => {
   quantityInput.value = Number(product.count);
   quantityInput.classList.add('itemQuantity');
   quantityContainer.appendChild(quantityInput);
-  let incrementBtn = document.createElement('span');
-  incrementBtn.classList.add('quantity-increment');
-  incrementBtn.textContent = "+";
-  let decrementBtn = document.createElement('span');
-  decrementBtn.classList.add('quantity-decrement');
-  decrementBtn.textContent = "-";
-  quantityContainer.prepend(decrementBtn);
-  quantityContainer.appendChild(incrementBtn);
   productQuantityDiv.append(quantityText, quantityContainer);
+
+  // Create the delete option
   let deleteDiv = document.createElement('div');
   deleteDiv.classList.add('cart__item__content__settings__delete');
   let deleteText = document.createElement('p');
   deleteText.textContent = "Supprimer";
   deleteText.classList.add('deleteItem');
   deleteDiv.appendChild(deleteText);
+
+  // Append the settings to the product content div
   productSettingsDiv.append(productQuantityDiv, deleteDiv);
 
   productContentDiv.append(productDescriptionDiv, productSettingsDiv);
@@ -83,10 +87,12 @@ cart.forEach((product) => {
 
   cartSection.appendChild(productArticle);
 
+  // Update the total price and quantity based on the current product
   totalPrice += parseFloat(product.price) * product.count;
   totalQuantity += product.count;
 });
 
+// Update the total quantity and price displayed in the DOM
 const totalQuantityElement = document.querySelector("#totalQuantity");
 const totalPriceElement = document.querySelector("#totalPrice");
 
@@ -102,14 +108,10 @@ function deleteCartItem(event) {
 
     // Remove the item from the cart array
     cart = cart.filter(item => !(item.id === itemId && item.color === itemColor));
-
     // Save the updated cart to local storage
     localStorage.setItem('cart', JSON.stringify(cart));
-
     // Remove the item from the HTML
     cartItem.remove();
-
-    // Recalculate the total price and quantity
     calculateTotal();
   }
 }
@@ -146,7 +148,6 @@ function modifyQuantity(event) {
     if (itemIndex !== -1) {
       // Decrease the item count by 1
       cart[itemIndex].count--;
-
       // If count becomes 0, remove the item from the cart
       if (cart[itemIndex].count === 0) {
         cart.splice(itemIndex, 1);
@@ -154,11 +155,8 @@ function modifyQuantity(event) {
       } else {
         quantityInput.value = cart[itemIndex].count;
       }
-
       // Save the updated cart to local storage
       localStorage.setItem('cart', JSON.stringify(cart));
-
-      // Recalculate the total price and quantity
       calculateTotal();
     }
   }
@@ -169,22 +167,34 @@ function updateCartItemQuantity(event) {
     const itemId = event.target.closest('.cart__item').dataset.id;
     const itemColor = event.target.closest('.cart__item').dataset.color;
 
-    // Find the item index in the cart array
-    const itemIndex = cart.findIndex(item => item.id === itemId && item.color === itemColor);
+    // Retrieve and parse the new quantity from input
+    let newQuantity = parseInt(quantityInput.value);
 
-    if (itemIndex !== -1) {
-      // Update the item count based on the input value
-      const newQuantity = parseInt(quantityInput.value);
-      cart[itemIndex].count = newQuantity;
+    // Delay the check to ensure it happens after the input is fully entered
+    setTimeout(() => {
+      // Check if the new quantity is outside the 1 to 100 range
+      if (newQuantity < 1 || newQuantity > 100 || isNaN(newQuantity)) {
+        alert("Please enter a quantity between 1 and 100."); 
+        newQuantity = newQuantity < 1 || isNaN(newQuantity) ? 1 : 100; 
+        quantityInput.value = newQuantity; 
+      }
 
-      // Save the updated cart to local storage
-      localStorage.setItem('cart', JSON.stringify(cart));
-
-      // Recalculate the total price and quantity
-      calculateTotal();
-    }
+      // Proceed with updating the cart
+      const itemIndex = cart.findIndex(item => item.id === itemId && item.color === itemColor);
+      if (itemIndex !== -1) {
+        cart[itemIndex].count = newQuantity; 
+        localStorage.setItem('cart', JSON.stringify(cart)); // Save the updated cart
+        calculateTotal(); // Recalculate totals
+      }
+    }, 0);
   }
 }
+
+// Listen for the change event on quantity inputs
+document.querySelectorAll('.itemQuantity').forEach(input => {
+  input.addEventListener('change', updateCartItemQuantity);
+});
+
 function calculateTotal() {
   totalPrice = 0;
   totalQuantity = 0;
@@ -233,8 +243,6 @@ function validateFirstName() {
 
   return firstNameIsValid;
 }
-
-
 // Function to validate the last name
 function validateLastName() {
   const lastNameInput = document.getElementById("lastName");
@@ -250,9 +258,10 @@ function validateLastName() {
     lastNameInput.classList.remove('error');
     lastNameErrorMsg.textContent = "";
   }
-
   return lastNameIsValid;
+
 }
+// Function to validate the email
 function validateEmail() {
   const emailInput = document.getElementById("email");
   const email = emailInput.value.trim();
@@ -338,14 +347,11 @@ firstNameInput.addEventListener("input", validateFirstName);
 lastNameInput.addEventListener("input", validateLastName);
 emailInput.addEventListener("input", validateEmail);
 cityInput.addEventListener("input", validateCity);
-
-// Calculate the total on page load
 calculateTotal();
 
 
 // Function to generate a random order ID
 function generateOrderId() {
-  // Logic to generate a unique order ID (e.g., using a random number or a timestamp)
   return Math.floor(Math.random() * 1000000000).toString();
 }
 
