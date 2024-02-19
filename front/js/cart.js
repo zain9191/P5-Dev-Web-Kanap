@@ -379,7 +379,7 @@ function handleFormSubmit(event) {
 
 
     // Redirect to the confirmation page
-    window.location.href = "./confirmation.html";
+    window.location.href = `./confirmation.html?orderId=${orderDetails.orderId}`;
   }
 }
 
